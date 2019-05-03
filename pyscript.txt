@@ -1,0 +1,33 @@
+import os
+os.chdir('D:\Working')
+for filename in os.listdir():
+	if os.path.isfile(os.path.join('D:\\working',filename)):
+		print(filename)
+
+file = open('D:\\Working\\hello.txt')
+content  = file.read()
+
+for folder , subfolder , filename in os.walk('D:\\Working'):
+	print('folder '+ folder)
+	print(folder+'inside'+str(subfolder))
+	print(folder+'inside'+str(filename))
+	print()
+
+///////////////////////////
+import os
+
+for folder , subfolder , filename in os.walk('D:\\Working'):
+	print('folder '+ folder)
+	print(folder+'inside'+str(filename))
+	print(os.path.join(str(folder),str(filename.append)))
+	print(folder+'inside'+str(subfolder))
+	print()
+	
+file = open('D:\\Working\hello.txt')
+content = file.read()
+file1 = open('D:\\Working\mello.txt')
+content1 = file1.read()
+if content == content1:
+    print('same')
+else:
+    print('not')
