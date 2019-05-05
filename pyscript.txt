@@ -31,3 +31,133 @@ if content == content1:
     print('same')
 else:
     print('not')
+
+ #shutil.copy(str(dcmp.left) + str(filename),str(destDirNew) + str(filename))
+     #shutil.copy(str(dcmp.right) + str(filename),str(destDirOld) + str(filename))
+
+shutil.copy(str(dcmp.right) + str(filename),str(destDirOld) + '\\' + str(filename))
+///////////////////////////////////////////////////////////////////////////////////
+import shutil
+import os
+output = "C:\\pkg"
+filename = ""
+from filecmp import dircmp
+def print_diff_files(dcmp):
+     for name in dcmp.diff_files:
+         print("diff_file %s found in %s and %s" % (name, dcmp.left,
+               dcmp.right))
+         filename = name;
+         destDirNew = dcmp.left.replace('D:\\Working','')
+         destDirNew = output +'\\After'+ destDirNew
+
+         destDirOld = dcmp.right.replace('D:\\Working_org','')
+         destDirOld = output +'\\Before'+ destDirOld
+         filename = name
+         if not os.path.exists(destDirNew):
+              os.makedirs(destDirNew)
+
+         if not os.path.exists(destDirOld):
+              os.makedirs(destDirOld)
+         shutil.copy(str(dcmp.left) +'\\'+ str(filename),str(destDirNew) + '\\' + str(filename))
+         shutil.copy(str(dcmp.right) +'\\'+ str(filename),str(destDirOld) + '\\' + str(filename))
+     
+     for sub_dcmp in dcmp.subdirs.values():
+         print_diff_files(sub_dcmp)
+
+dcmp = dircmp('D:\\Working', 'D:\\Working_org') 
+print_diff_files(dcmp)
+/////////////////////////////////////////////////////////////////////////////////
+import shutil
+import os
+from filecmp import dircmp
+output = "C:\\pkg"
+filename = ""
+modifiedDir = ""
+orgdir = ""
+
+print('Plz Enter Modified root Folder')
+modifiedDir = input()
+print('Plz Enter original root Folder')
+orgdir = input()
+start = modifiedDir.rfind('\\')
+end = len(modifiedDir)
+dcmp = dircmp(modifiedDir,orgdir)
+
+
+
+def print_diff_files(dcmp):
+     for name in dcmp.diff_files:
+         print("diff_file %s found in %s and %s " % (name, dcmp.left,
+               dcmp.right))
+
+         new = dcmp.left
+         start1 = new.rfind(modifiedDir[start:end])
+         end1 = len(new)
+         destDirNew = output +'\\After'+new[start1:end1]
+         destDirOld = output +'\\Before'+new[start1:end1]
+         if not os.path.exists(destDirNew):
+              os.makedirs(destDirNew)
+
+         if not os.path.exists(destDirOld):
+              os.makedirs(destDirOld)
+         shutil.copy(str(dcmp.left) +'\\'+ name,str(destDirNew) + '\\' + name)
+         shutil.copy(str(dcmp.right) +'\\'+ name,str(destDirOld) + '\\' + name)
+     
+     for sub_dcmp in dcmp.subdirs.values():
+         print_diff_files(sub_dcmp)
+
+
+def print_only_left_files(dcmp):
+     for name in dcmp.left_only:
+         print("file %s found left_only %s" % (name, dcmp.left))
+         onlyleft = dcmp.left
+         start1 = onlyleft.rfind(modifiedDir[start:end])
+         end1 = len(onlyleft)
+         destOnlyLeft = output +'\\After'+onlyleft[start1:end1]
+         if not os.path.exists(destOnlyLeft):
+              os.makedirs(destOnlyLeft)
+         shutil.copy(str(dcmp.left) +'\\'+ name,str(destOnlyLeft) + '\\' + name)
+         
+     for sub_dcmp in dcmp.subdirs.values():
+         print_only_left_files(sub_dcmp)
+
+
+print_diff_files(dcmp)
+print_only_left_files(dcmp)
+
+////////////////////////////////////////////////////////////////////////////////////
+
+C:\Users\rohit\AppData\Local\Programs\Python\Python37\myscripts
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
