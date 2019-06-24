@@ -1,0 +1,98 @@
+std::tr1::shared_ptr<Investment> pInv(createInvestment()); 
+
+
+int daysHeld(const Investment *pi); // return number of days
+                                    // investment has been held
+
+int days = daysHeld(pInv);
+
+
+int days = daysHeld(pInv.get());
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+class Investment {    // root class for a hierarchy
+ public:              // of investment types
+              
+ bool isTaxFree() const;
+ ...
+
+};
+
+Investment* createInvestment();  // factory function
+
+std::tr1::shared_ptr<Investment>pi1(createInvestment());  // have tr1::shared_ptr  manage a resource
+                                                         
+bool taxable1 = !(pi1->isTaxFree()); // access resource
+                                     // via operator->
+...
+
+std::auto_ptr<Investment> pi2(createInvestment()); // have auto_ptr manage a resource
+                                                   
+bool taxable2 = !((*pi2).isTaxFree());    // access resource via operator*
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+FontHandle getFont(); // from C API — params omitted for simplicity.
+
+void releaseFont(FontHandle fh); // from the same C API   
+
+
+class Font {    // RAII class
+
+public:
+explicit Font(FontHandle fh)    // acquire resource;
+
+: f(fh) // use pass-by-value, because the C API does
+{}
+
+~Font() { releaseFont(f ); } // release resource
+
+private:
+
+FontHandle f; // the raw font resource
+};   
+
+
+class Font {
+
+public:
+...
+FontHandle get() const { return f; } // explicit conversion function
+...
+
+};
+ 
+///////////////////////////////////////////////////////////////////////////////////////
+
+void changeFontSize(FontHandle f, int newSize); // from the C API
+Font f(getFont());
+int newFontSize;
+...
+changeFontSize(f.get(), newFontSize); // explicitly convert
+                                      // Font to FontHandle 
+//////////////////////////////////////////////////////////////////////////////////////
+
+class Font
+public:
+...
+operator FontHandle() const // implicit conversion function
+{ return f; }
+...
+};    
+
+
+
+int newFontSize;
+...
+changeFontSize(f, newFontSize); // implicitly convert Font
+                                // to FontHandle
+
+
+Font f1(getFont());
+...
+FontHandle f2 = f1;  // oops! meant to copy a Font
+                     // object, but instead implicitly
+                     // converted f1 into its underlying
+                    // FontHandle, then copied that
+                       
