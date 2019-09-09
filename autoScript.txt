@@ -27,3 +27,31 @@ for f in files:
     if flag == "false":
               fileout = open(os.path.join('D:\\Automation\\output\\',f),"a+") 
               fileout.write(listrow)
+//////////////////////////////////////////////////////////////
+
+import os
+print("ENTER INPUT FOLDER PATH :")
+inDir = input()
+print("ENTER OUTPUT FOLDER PATH :")
+outDir = input()
+files = []
+# r=root, d=directories, f = files
+for r, d, f in os.walk(inDir):
+    for file in f:
+        if '.txt' in file:
+            files.append(file)
+
+for f in files:
+ file = open(os.path.join(inDir,f),"r")
+ lines = file.read()
+ file.close()
+ 
+ listdata = lines.split("CHANGE")
+ for i in range(len(listdata)):
+    listrow = listdata[i]
+    rowsplit = listrow.split('\n')
+    if any("VFT_TIME_CTRL_PARAM" in s for s in rowsplit):
+        continue
+    else:
+        fileout = open(os.path.join(outDir,f),"a+")
+        fileout.write(listrow)
