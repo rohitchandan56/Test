@@ -1,3 +1,10 @@
+https://repo.zenk-security.com/Linux%20et%20systemes%20d.exploitations/Windows%20Internals%20Part%201_6th%20Edition.pdf 
+http://index-of.es/Linux/Other/Windows%20Internals%20Part%202_6th%20Edition.pdf 
+ 
+https://www.docdroid.net/ZPfHmS5/data-structures-and-algorithms-narasimha-karumanchi-pdf 
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 std::tr1::shared_ptr<Investment> pInv(createInvestment()); 
 
 
@@ -33,7 +40,7 @@ bool taxable2 = !((*pi2).isTaxFree());    // access resource via operator*
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-FontHandle getFont(); // from C API — params omitted for simplicity.
+FontHandle getFont(); // from C API â€” params omitted for simplicity.
 
 void releaseFont(FontHandle fh); // from the same C API   
 
